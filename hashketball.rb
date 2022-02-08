@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -127,3 +129,83 @@ def game_hash
 end
 
 # Write code here
+##########################################
+
+#accessing all the players 
+def all_players
+  game_hash[:home][:players] + game_hash[:away][:players]
+end
+
+#finds matching player data
+def find_player_data(player)
+  all_players.find {|player_data| 
+  player_data[:player_name] == player
+  }
+end
+
+def num_points_scored (player)
+  data = find_player_data(player)
+  data[:points]
+end
+
+##########################################
+
+def shoe_size(player_name)
+ data = find_player_data(player_name)
+ data[:shoe]
+end
+
+##########################################
+
+#find team and return team data hash
+def find_team(team_name)
+  #return the whole team data below 'location'
+  team_info = game_hash.find {|location, data|
+   data[:team_name] == team_name
+  }
+  
+  #return team data from 'teamname'
+  team_info[1]
+end
+
+def team_colors(team_name)
+  team_data = find_team(team_name)
+  team_data[:colors]
+end
+
+
+###########################################
+
+def team_names
+  [game_hash[:home][:team_name], + game_hash[:away][:team_name]]
+end
+
+###########################################
+
+def player_numbers(team_name)
+  team_data = find_team(team_name)
+  team_data[:players].map {|data| data[:number]}
+end
+
+###########################################
+
+def player_stats(player_name)
+  all_players.find {|data| data[:player_name] == player_name}
+end
+
+###########################################
+
+def big_shoe_rebounds
+  biggest_shoe = all_players.max_by {|data| data[:shoe]}
+  biggest_shoe[:rebounds]
+end
+
+####  BONUS  #############################
+
+def most_points_scored
+  most_point = all_players.max_by {|data| data[:points]}
+  most_point[:player_name]
+end
+ 
+###########################################
+
